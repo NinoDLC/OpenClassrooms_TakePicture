@@ -16,6 +16,10 @@ import java.io.File
 
 class MainActivity : AppCompatActivity() {
 
+    companion object {
+        private const val KEY_CURRENT_PHOTO_URI = "KEY_CURRENT_PHOTO_URI"
+    }
+
     private val binding by viewBinding { MainActivityBinding.inflate(it) }
 
     private var currentPhotoUri: Uri? = null
@@ -34,6 +38,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(binding.root)
+
+        currentPhotoUri = savedInstanceState?.getString(KEY_CURRENT_PHOTO_URI)?.let { Uri.parse(it) }
 
         // region CLASSIC
         binding.mainButtonPicture.setOnClickListener {
@@ -84,4 +90,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
     // endregion CLASSIC
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        outState.putString(KEY_CURRENT_PHOTO_URI, currentPhotoUri?.toString())
+    }
 }
