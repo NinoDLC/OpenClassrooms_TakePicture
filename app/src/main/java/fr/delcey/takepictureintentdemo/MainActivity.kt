@@ -39,7 +39,8 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(binding.root)
 
-        currentPhotoUri = savedInstanceState?.getString(KEY_CURRENT_PHOTO_URI)?.let { Uri.parse(it) }
+        @Suppress("DEPRECATION")
+        currentPhotoUri = savedInstanceState?.getParcelable(KEY_CURRENT_PHOTO_URI)
 
         // region CLASSIC
         binding.mainButtonPicture.setOnClickListener {
@@ -94,6 +95,6 @@ class MainActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
-        outState.putString(KEY_CURRENT_PHOTO_URI, currentPhotoUri?.toString())
+        outState.putParcelable(KEY_CURRENT_PHOTO_URI, currentPhotoUri)
     }
 }
